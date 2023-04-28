@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+package pwdm;
+
+option go_package = "/api";
+
+/*
+
+    Query authentication and authorization in auth service.
+
+*/
+
+message AuthReq {
+    string login = 1;
+    string password = 2;
+}
+
+message AuthResp {
+    string token = 1;
+    string error = 2;
+}
+
+service AuthService {
+    rpc Create(AuthReq) returns (AuthResp);
+    rpc Enter(AuthReq) returns (AuthResp);
+}
+
+/*
+
+    Query insert/select data to/from server.
+
+*/
+
+message InsertLoginPasswordReq {
+    int32 type = 1; 
+    string title = 2; 
+    string login = 3;
+    string password = 4;
+    string tag = 5;
+    string comment = 6;
+}
+
+message InsertCardReq {
+    int32 type = 1;
+    string title = 2;
+    string num = 3;
+    string date = 4;
+    string cvc = 5;
+    string first_name = 6;
+    string last_name = 7;
+    string tag = 8;
+    string comment = 9;
+}
+
+message InsertTextReq {
+    int32 type = 1;
+    string title = 2;
+    string data = 3;
+    string tag = 4;
+    string comment = 5;
+}
+
+message InsertBinaryReq {
+    int32 type = 1;
+    string title = 2;
+    bytes data = 3;
+    string tag = 4;
+    string comment = 5;
+}
+
+message InsertResp {
+    int32 id = 1;
+    string title = 2;
+    string error = 3;
+}
+
+message GetItemReq {
+    int32 id = 1;
+}
+
+message GetLoginPasswordResp {
+    int32 id = 1;
+    string title = 2;
+    string login = 3;
+    string password = 4;
+    string tag = 5;
+    string comment = 6;
+    string error = 7;
+}
+
+message GetCardResp {
+    int32 id = 1;
+    string title = 2;
+    string num = 3;
+    string date = 4;
+    string cvc = 5;
+    string first_name = 6;
+    string last_name = 7;
+    string tag = 8;
+    string comment = 9;
+    string error = 10;
+}
+
+message GetTextResp {
+    int32 id = 1;
+    string title = 2;
+    string data = 3;
+    string tag = 4;
+    string comment = 5;
+    string error = 6;
+}
+
+message GetBinaryResp {
+    int32 id = 1;
+    string title = 2;
+    bytes data = 3;
+    string tag = 4;
+    string comment = 5;
+    string error = 6;
+}
+
+service GiveTakeService {
+    rpc InsLogPwd(InsertLoginPasswordReq) returns (InsertResp);
+    rpc InsCard(InsertCardReq) returns (InsertResp);
+    rpc InsText(InsertTextReq) returns (InsertResp);
+    rpc InsBinary(InsertBinaryReq) returns (InsertResp);
+    rpc GetLogPwd(GetItemReq) returns (GetLoginPasswordResp);
+    rpc GetCard(GetItemReq) returns (GetCardResp);
+    rpc GetText(GetItemReq) returns (GetTextResp);
+    rpc GetBinary(GetItemReq) returns (GetBinaryResp);
+}
+
+/*
+
+    Query delete data from server.
+
+*/
+
+message DeleteItemReq {
+    int32 id = 1;
+}
+
+message DeleteAllReq {
+    repeated int32 list_id = 1;
+}
+
+message DeleteResp {
+    string error = 1;
+}
+
+service DeleteService {
+    rpc DelItem(DeleteItemReq) returns (DeleteResp);
+    rpc DelAll(DeleteAllReq) returns (DeleteResp);
+}
+
+/*
+
+    Query to show information for users data.
+
+*/
+
+message Empty {}
+
+message ShowItemsResp {
+    message ItemModel {
+        int32 id = 1;
+        int32 type = 2;
+        string title = 3;
+        string tag = 4;
+        string comment = 5;
+    }
+    repeated ItemModel items = 1;
+    string error = 2;
+}
+
+service ShowInfoService {
+    rpc GetInfo(Empty) returns (ShowItemsResp);
+}
