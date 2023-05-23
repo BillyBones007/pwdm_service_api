@@ -496,7 +496,6 @@ var GiveTakeService_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	DeleteService_DelItem_FullMethodName = "/pwdm.DeleteService/DelItem"
-	DeleteService_DelAll_FullMethodName  = "/pwdm.DeleteService/DelAll"
 )
 
 // DeleteServiceClient is the client API for DeleteService service.
@@ -504,7 +503,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeleteServiceClient interface {
 	DelItem(ctx context.Context, in *DeleteItemReq, opts ...grpc.CallOption) (*DeleteResp, error)
-	DelAll(ctx context.Context, in *DeleteAllReq, opts ...grpc.CallOption) (*DeleteResp, error)
 }
 
 type deleteServiceClient struct {
@@ -524,21 +522,11 @@ func (c *deleteServiceClient) DelItem(ctx context.Context, in *DeleteItemReq, op
 	return out, nil
 }
 
-func (c *deleteServiceClient) DelAll(ctx context.Context, in *DeleteAllReq, opts ...grpc.CallOption) (*DeleteResp, error) {
-	out := new(DeleteResp)
-	err := c.cc.Invoke(ctx, DeleteService_DelAll_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // DeleteServiceServer is the server API for DeleteService service.
 // All implementations must embed UnimplementedDeleteServiceServer
 // for forward compatibility
 type DeleteServiceServer interface {
 	DelItem(context.Context, *DeleteItemReq) (*DeleteResp, error)
-	DelAll(context.Context, *DeleteAllReq) (*DeleteResp, error)
 	mustEmbedUnimplementedDeleteServiceServer()
 }
 
@@ -548,9 +536,6 @@ type UnimplementedDeleteServiceServer struct {
 
 func (UnimplementedDeleteServiceServer) DelItem(context.Context, *DeleteItemReq) (*DeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelItem not implemented")
-}
-func (UnimplementedDeleteServiceServer) DelAll(context.Context, *DeleteAllReq) (*DeleteResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DelAll not implemented")
 }
 func (UnimplementedDeleteServiceServer) mustEmbedUnimplementedDeleteServiceServer() {}
 
@@ -583,24 +568,6 @@ func _DeleteService_DelItem_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DeleteService_DelAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAllReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeleteServiceServer).DelAll(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeleteService_DelAll_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeleteServiceServer).DelAll(ctx, req.(*DeleteAllReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // DeleteService_ServiceDesc is the grpc.ServiceDesc for DeleteService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -611,10 +578,6 @@ var DeleteService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DelItem",
 			Handler:    _DeleteService_DelItem_Handler,
-		},
-		{
-			MethodName: "DelAll",
-			Handler:    _DeleteService_DelAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

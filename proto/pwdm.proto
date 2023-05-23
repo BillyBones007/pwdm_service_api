@@ -138,10 +138,7 @@ service GiveTakeService {
 
 message DeleteItemReq {
     int32 id = 1;
-}
-
-message DeleteAllReq {
-    repeated int32 list_id = 1;
+    int32 type = 2;
 }
 
 message DeleteResp {
@@ -150,7 +147,6 @@ message DeleteResp {
 
 service DeleteService {
     rpc DelItem(DeleteItemReq) returns (DeleteResp);
-    rpc DelAll(DeleteAllReq) returns (DeleteResp);
 }
 
 /*
