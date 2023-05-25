@@ -76,6 +76,7 @@ message InsertResp {
 
 message GetItemReq {
     int32 id = 1;
+    int32 type = 2;
 }
 
 message GetLoginPasswordResp {
