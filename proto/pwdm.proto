@@ -132,6 +132,66 @@ service GiveTakeService {
 
 /*
 
+    Query update data on the server.
+
+*/
+
+message UpdateLoginPasswordReq {
+    int32 id =1;
+    int32 type = 2; 
+    string title = 3; 
+    string login = 4;
+    string password = 5;
+    string tag = 6;
+    string comment = 7;
+}
+
+message UpdateCardReq {
+    int32 id =1;
+    int32 type = 2;
+    string title = 3;
+    string num = 4;
+    string date = 5;
+    string cvc = 6;
+    string first_name = 7;
+    string last_name = 8;
+    string tag = 9;
+    string comment = 10;
+}
+
+message UpdateTextReq {
+    int32 id = 1;
+    int32 type = 2;
+    string title = 3;
+    string data = 4;
+    string tag = 5;
+    string comment = 6;
+}
+
+message UpdateBinaryReq {
+    int32 id = 1;
+    int32 type = 2;
+    string title = 3;
+    bytes data = 4;
+    string tag = 5;
+    string comment = 6;
+}
+
+message UpdateResp {
+    int32 id = 1;
+    string title = 2;
+    string error = 3;
+}
+
+service UpdateService {
+    rpc UpdateLogPwd(UpdateLoginPasswordReq) returns (UpdateResp);
+    rpc UpdateCard(UpdateCardReq) returns (UpdateResp);
+    rpc UpdateText(UpdateTextReq) returns (UpdateResp);
+    rpc UpdateBinary(UpdateBinaryReq) returns (UpdateResp);
+}
+
+/*
+
     Query delete data from server.
 
 */

@@ -495,6 +495,207 @@ var GiveTakeService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	UpdateService_UpdateLogPwd_FullMethodName = "/pwdm.UpdateService/UpdateLogPwd"
+	UpdateService_UpdateCard_FullMethodName   = "/pwdm.UpdateService/UpdateCard"
+	UpdateService_UpdateText_FullMethodName   = "/pwdm.UpdateService/UpdateText"
+	UpdateService_UpdateBinary_FullMethodName = "/pwdm.UpdateService/UpdateBinary"
+)
+
+// UpdateServiceClient is the client API for UpdateService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type UpdateServiceClient interface {
+	UpdateLogPwd(ctx context.Context, in *UpdateLoginPasswordReq, opts ...grpc.CallOption) (*UpdateResp, error)
+	UpdateCard(ctx context.Context, in *UpdateCardReq, opts ...grpc.CallOption) (*UpdateResp, error)
+	UpdateText(ctx context.Context, in *UpdateTextReq, opts ...grpc.CallOption) (*UpdateResp, error)
+	UpdateBinary(ctx context.Context, in *UpdateBinaryReq, opts ...grpc.CallOption) (*UpdateResp, error)
+}
+
+type updateServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewUpdateServiceClient(cc grpc.ClientConnInterface) UpdateServiceClient {
+	return &updateServiceClient{cc}
+}
+
+func (c *updateServiceClient) UpdateLogPwd(ctx context.Context, in *UpdateLoginPasswordReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+	out := new(UpdateResp)
+	err := c.cc.Invoke(ctx, UpdateService_UpdateLogPwd_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *updateServiceClient) UpdateCard(ctx context.Context, in *UpdateCardReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+	out := new(UpdateResp)
+	err := c.cc.Invoke(ctx, UpdateService_UpdateCard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *updateServiceClient) UpdateText(ctx context.Context, in *UpdateTextReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+	out := new(UpdateResp)
+	err := c.cc.Invoke(ctx, UpdateService_UpdateText_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *updateServiceClient) UpdateBinary(ctx context.Context, in *UpdateBinaryReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+	out := new(UpdateResp)
+	err := c.cc.Invoke(ctx, UpdateService_UpdateBinary_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UpdateServiceServer is the server API for UpdateService service.
+// All implementations must embed UnimplementedUpdateServiceServer
+// for forward compatibility
+type UpdateServiceServer interface {
+	UpdateLogPwd(context.Context, *UpdateLoginPasswordReq) (*UpdateResp, error)
+	UpdateCard(context.Context, *UpdateCardReq) (*UpdateResp, error)
+	UpdateText(context.Context, *UpdateTextReq) (*UpdateResp, error)
+	UpdateBinary(context.Context, *UpdateBinaryReq) (*UpdateResp, error)
+	mustEmbedUnimplementedUpdateServiceServer()
+}
+
+// UnimplementedUpdateServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUpdateServiceServer struct {
+}
+
+func (UnimplementedUpdateServiceServer) UpdateLogPwd(context.Context, *UpdateLoginPasswordReq) (*UpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateLogPwd not implemented")
+}
+func (UnimplementedUpdateServiceServer) UpdateCard(context.Context, *UpdateCardReq) (*UpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCard not implemented")
+}
+func (UnimplementedUpdateServiceServer) UpdateText(context.Context, *UpdateTextReq) (*UpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateText not implemented")
+}
+func (UnimplementedUpdateServiceServer) UpdateBinary(context.Context, *UpdateBinaryReq) (*UpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBinary not implemented")
+}
+func (UnimplementedUpdateServiceServer) mustEmbedUnimplementedUpdateServiceServer() {}
+
+// UnsafeUpdateServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UpdateServiceServer will
+// result in compilation errors.
+type UnsafeUpdateServiceServer interface {
+	mustEmbedUnimplementedUpdateServiceServer()
+}
+
+func RegisterUpdateServiceServer(s grpc.ServiceRegistrar, srv UpdateServiceServer) {
+	s.RegisterService(&UpdateService_ServiceDesc, srv)
+}
+
+func _UpdateService_UpdateLogPwd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateLoginPasswordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UpdateServiceServer).UpdateLogPwd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UpdateService_UpdateLogPwd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UpdateServiceServer).UpdateLogPwd(ctx, req.(*UpdateLoginPasswordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UpdateService_UpdateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCardReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UpdateServiceServer).UpdateCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UpdateService_UpdateCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UpdateServiceServer).UpdateCard(ctx, req.(*UpdateCardReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UpdateService_UpdateText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTextReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UpdateServiceServer).UpdateText(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UpdateService_UpdateText_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UpdateServiceServer).UpdateText(ctx, req.(*UpdateTextReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UpdateService_UpdateBinary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBinaryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UpdateServiceServer).UpdateBinary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UpdateService_UpdateBinary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UpdateServiceServer).UpdateBinary(ctx, req.(*UpdateBinaryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// UpdateService_ServiceDesc is the grpc.ServiceDesc for UpdateService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UpdateService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pwdm.UpdateService",
+	HandlerType: (*UpdateServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UpdateLogPwd",
+			Handler:    _UpdateService_UpdateLogPwd_Handler,
+		},
+		{
+			MethodName: "UpdateCard",
+			Handler:    _UpdateService_UpdateCard_Handler,
+		},
+		{
+			MethodName: "UpdateText",
+			Handler:    _UpdateService_UpdateText_Handler,
+		},
+		{
+			MethodName: "UpdateBinary",
+			Handler:    _UpdateService_UpdateBinary_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/pwdm.proto",
+}
+
+const (
 	DeleteService_DelItem_FullMethodName = "/pwdm.DeleteService/DelItem"
 )
 
